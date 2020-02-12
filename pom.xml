@@ -21,6 +21,7 @@
 
     <properties>
         <java.version>11</java.version>
+        <scm.hgServer>https://github.com/enaimus</scm.hgServer>
     </properties>
 
     <build>
@@ -41,7 +42,8 @@
     </build>
 
     <scm>
-        <developerConnection>scm:git@github.com:enaimus/sfg-pet-clinic.git</developerConnection>
+        <url>${scm.hgServer}/${project.artifactId}</url>
+        <developerConnection>scm:git:${scm.hgServer}/${project.artifactId}.git</developerConnection>
     </scm>
 
 </project>
