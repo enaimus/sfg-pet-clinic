@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.websocket.server.PathParam;
 
 
-@RequestMapping("/vet")
+@RequestMapping("/vets")
 @Controller
 public class VetController {
 
@@ -20,9 +20,10 @@ public class VetController {
         this.vetService = vetService;
     }
 
-    @GetMapping
-    public String findAll(Model mode){
-        return "vet/list";
+    @GetMapping({"/", "", "index", "index.html"})
+    public String listVets (Model model){
+        model.addAttribute("vets", vetService.findAll());
+        return "vets/index";
     }
 
     @DeleteMapping("/{id}")
