@@ -1,16 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Clinic index</title>
 </head>
 
 <body>
-    <h1>Vets list</h1>
+<!--/*@thymesVar id="vet" type="com.enaimus.sfgpetclinic.models.Vet"*/-->
+<h1>Vets list</h1>
 <table>
-    <th>
-
-    </th>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vet : ${vets}">
+        <td th:text="${vet.getId()}"></td>
+        <td th:text="${vet.getFirstName()}"></td>
+        <td th:text="${vet.getLastName()}"></td>
+    </tr>
+    </tbody>
 </table>
 </body>
 </html>
