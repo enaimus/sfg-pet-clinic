@@ -1,29 +1,55 @@
 package com.enaimus.sfgpetclinic.bootstrap;
 
 import com.enaimus.sfgpetclinic.models.Owner;
+import com.enaimus.sfgpetclinic.models.Pet;
+import com.enaimus.sfgpetclinic.models.PetType;
 import com.enaimus.sfgpetclinic.models.Vet;
 import com.enaimus.sfgpetclinic.services.OwnerService;
+import com.enaimus.sfgpetclinic.services.PetTypeService;
 import com.enaimus.sfgpetclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    private final PetTypeService petTypeService;
 
 
-    public DataLoader(OwnerService ownerService, VetService vetService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.petTypeService = petTypeService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+        PetType petType1 = new PetType();
+        petType1.setName("Dog");
+
+        PetType petType = new PetType();
+        petType.setName("Cat");
+
+        petTypeService.save(petType);
+
         Owner owner1 = new Owner();
         owner1.setFirstName("Michael");
         owner1.setLastName("Weston");
+        owner1.setPets(new HashSet<>());
+
+        Pet pet = new Pet();
+        pet.setPetType(petType);
+        pet.setBirthDate(LocalDate.now());
+        pet.setOwner(owner1);
+
+        owner1.getPets().add(pet);
 
         ownerService.save(owner1);
 
@@ -31,6 +57,14 @@ public class DataLoader implements CommandLineRunner {
         owner2.setFirstName("Fiona");
         owner2.setLastName("Glenanne");
 
+
+
+        Pet pet2 = new Pet();
+        pet2.setPetType(petType1);
+        pet2.setBirthDate(LocalDate.now());
+        pet2.setOwner(owner2);
+        owner2.setPets(new HashSet<>());
+        owner2.getPets().add(pet2);
         ownerService.save(owner2);
         System.out.println("Owners loaded");
 
@@ -46,9 +80,7 @@ public class DataLoader implements CommandLineRunner {
 
         vetService.save(vet2);
 
-
         System.out.println("Vets loaded");
-
 
 
     }
