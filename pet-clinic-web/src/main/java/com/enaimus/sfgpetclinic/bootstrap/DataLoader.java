@@ -1,9 +1,6 @@
 package com.enaimus.sfgpetclinic.bootstrap;
 
-import com.enaimus.sfgpetclinic.models.Owner;
-import com.enaimus.sfgpetclinic.models.Pet;
-import com.enaimus.sfgpetclinic.models.PetType;
-import com.enaimus.sfgpetclinic.models.Vet;
+import com.enaimus.sfgpetclinic.models.*;
 import com.enaimus.sfgpetclinic.services.OwnerService;
 import com.enaimus.sfgpetclinic.services.PetTypeService;
 import com.enaimus.sfgpetclinic.services.VetService;
@@ -68,15 +65,23 @@ public class DataLoader implements CommandLineRunner {
         ownerService.save(owner2);
         System.out.println("Owners loaded");
 
+        Specialty specialtyMammal = new Specialty();
+        specialtyMammal.setDescription("Mammals");
+
+        Specialty specialtyBirds = new Specialty();
+        specialtyBirds.setDescription("Birds");
+
         Vet vet1 = new Vet();
         vet1.setFirstName("Sam");
         vet1.setLastName("Axe");
+        vet1.getSpecialty().add(specialtyMammal);
 
         vetService.save(vet1);
 
         Vet vet2 = new Vet();
         vet2.setFirstName("Jessie");
         vet2.setLastName("Porter");
+        vet2.getSpecialty().add(specialtyBirds);
 
         vetService.save(vet2);
 
